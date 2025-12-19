@@ -4,12 +4,25 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
+
+	"github.com/milkman-dev/pokedexcli/pokecache"
 )
 
 func (c *Client) GetLocations(pageURL *string) (Locations, error) {
+	locationsResp := Locations{}
 	url := baseURL + "location-area"
 	if pageURL != nil {
 		url = *pageURL
+	}
+
+	cache := pokecache.NewCache(10 * time.Second)
+	if v, ok := cache.Get(url); ok {
+		if err := json.Unmarshal(v, &locationsResp); err != nil {
+			return Locations{}, err
+		} else {
+			return locationsResp, nil
+		}
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -27,8 +40,8 @@ func (c *Client) GetLocations(pageURL *string) (Locations, error) {
 	if err != nil {
 		return Locations{}, err
 	}
+	cache.Add(url, data)
 
-	locationsResp := Locations{}
 	err = json.Unmarshal(data, &locationsResp)
 	if err != nil {
 		return Locations{}, err
