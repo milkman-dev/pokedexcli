@@ -2,11 +2,9 @@ package pokeapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
-	"time"
-
-	"github.com/milkman-dev/pokedexcli/pokecache"
 )
 
 func (c *Client) GetLocations(pageURL *string) (Locations, error) {
@@ -16,11 +14,12 @@ func (c *Client) GetLocations(pageURL *string) (Locations, error) {
 		url = *pageURL
 	}
 
-	cache := pokecache.NewCache(10 * time.Second)
-	if v, ok := cache.Get(url); ok {
+	if v, ok := c.cache.Get(url); ok {
+		fmt.Println("Using cache...")
 		if err := json.Unmarshal(v, &locationsResp); err != nil {
 			return Locations{}, err
 		} else {
+
 			return locationsResp, nil
 		}
 	}
@@ -40,7 +39,7 @@ func (c *Client) GetLocations(pageURL *string) (Locations, error) {
 	if err != nil {
 		return Locations{}, err
 	}
-	cache.Add(url, data)
+	c.cache.Add(url, data)
 
 	err = json.Unmarshal(data, &locationsResp)
 	if err != nil {

@@ -45,7 +45,7 @@ func commandHelp(c *config) error {
 	fmt.Println("")
 	for _, cmd := range commands {
 		fmt.Printf("%s: %s", cmd.name, cmd.description)
-		fmt.Println()
+		fmt.Println("")
 	}
 
 	return nil

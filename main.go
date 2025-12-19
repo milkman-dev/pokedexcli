@@ -12,7 +12,7 @@ import (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	cfg := &config{
-		client:   pokeapi.NewClient(5 * time.Second),
+		client:   pokeapi.NewClient(5*time.Second, 10*time.Second),
 		next:     nil,
 		previous: nil,
 	}
