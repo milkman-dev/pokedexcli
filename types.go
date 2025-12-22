@@ -10,6 +10,7 @@ type cliCommand struct {
 
 type config struct {
 	client   pokeapi.Client
+	location *string
 	next     *string
 	previous *string
 }
