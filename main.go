@@ -30,11 +30,23 @@ func main() {
 		commands := getCommands()
 
 		if len(command) == 2 {
-			location := command[1]
-			cfg.location = &location
-		} else if command[0] == "explore" {
-			fmt.Println("Must specify area of exploration")
-			continue
+			switch command[0] {
+			case "explore":
+				location := command[1]
+				cfg.location = &location
+			case "catch":
+				pokemon := command[1]
+				cfg.pokemon = &pokemon
+			}
+		} else {
+			switch command[0] {
+			case "explore":
+				fmt.Println("Must specify location")
+				continue
+			case "catch":
+				fmt.Println("Must specify pokemon")
+				continue
+			}
 		}
 
 		if c, ok := commands[command[0]]; ok {

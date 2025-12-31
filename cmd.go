@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/milkman-dev/pokedexcli/pokeapi"
 )
 
 func getCommands() map[string]cliCommand {
@@ -31,6 +33,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Explore area pokemons",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Try to catch a pokemon passing its name",
+			callback:    commandCatch,
 		},
 	}
 
@@ -97,5 +104,24 @@ func commandExplore(c *config) error {
 		fmt.Println()
 	}
 
+	return nil
+}
+
+func commandCatch(c *config) error {
+	c.catchedPokemon = make(map[string]pokeapi.Pokemon)
+	pokemon, err := c.client.CatchPokemon(c.pokemon)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println()
+	fmt.Printf("Throwing a Pokeball at %s...", pokemon.Name)
+	fmt.Println()
+
+	catchSuccess := pokeballCatch(pokemon.BaseExperience)
+	switch catchSuccess {
+	case true:
+		c.catchedPokemon[pokemon.Name] = pokemon
+	}
 	return nil
 }

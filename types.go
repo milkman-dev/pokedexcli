@@ -9,8 +9,10 @@ type cliCommand struct {
 }
 
 type config struct {
-	client   pokeapi.Client
-	location *string
-	next     *string
-	previous *string
+	client         pokeapi.Client
+	location       *string
+	next           *string
+	previous       *string
+	pokemon        *string
+	catchedPokemon map[string]pokeapi.Pokemon
 }

@@ -11,7 +11,12 @@ type Locations struct {
 }
 
 type Pokemon struct {
-	Name string `json:"name"`
+	ID             int    `json:"id"`
+	Name           string `json:"name"`
+	BaseExperience int    `json:"base_experience"`
+	Height         int    `json:"height"`
+	Order          int    `json:"order"`
+	Weight         int    `json:"weight"`
 }
 
 type AreaPokemons struct {
