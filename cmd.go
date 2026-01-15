@@ -44,6 +44,11 @@ func getCommands() map[string]cliCommand {
 			description: "Inspect for pokemons on your pokedex",
 			callback:    commandInspect,
 		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Prints all the pokemon you have catched until now",
+			callback:    commandPokedex,
+		},
 	}
 
 	return commands
@@ -138,6 +143,14 @@ func commandCatch(c *config) error {
 
 func commandInspect(c *config) error {
 	inspectPokedex(c, *c.pokemon)
+
+	return nil
+}
+
+func commandPokedex(c *config) error {
+	for k := range c.catchedPokemon {
+		fmt.Println(k)
+	}
 
 	return nil
 }
