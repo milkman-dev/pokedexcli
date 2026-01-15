@@ -37,6 +37,9 @@ func main() {
 			case "catch":
 				pokemon := command[1]
 				cfg.pokemon = &pokemon
+			case "inspect":
+				pokemon := command[1]
+				cfg.pokemon = &pokemon
 			}
 		} else {
 			switch command[0] {

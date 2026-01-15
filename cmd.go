@@ -39,6 +39,11 @@ func getCommands() map[string]cliCommand {
 			description: "Try to catch a pokemon passing its name",
 			callback:    commandCatch,
 		},
+		"inspect": {
+			name:        "inspect",
+			description: "Inspect for pokemons on your pokedex",
+			callback:    commandInspect,
+		},
 	}
 
 	return commands
@@ -122,6 +127,17 @@ func commandCatch(c *config) error {
 	switch catchSuccess {
 	case true:
 		c.catchedPokemon[pokemon.Name] = pokemon
+		fmt.Printf("You caught %s!", pokemon.Name)
+		fmt.Println()
+	case false:
+		fmt.Printf("%s escaped the Pokeball!", pokemon.Name)
+		fmt.Println()
 	}
+	return nil
+}
+
+func commandInspect(c *config) error {
+	inspectPokedex(c, *c.pokemon)
+
 	return nil
 }

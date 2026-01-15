@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand/v2"
 	"strings"
 )
@@ -17,4 +18,16 @@ func pokeballCatch(base_experience int) bool {
 	}
 
 	return false
+}
+
+func inspectPokedex(c *config, pokemon string) error {
+	if p, ok := c.catchedPokemon[pokemon]; ok {
+		fmt.Println("Name: ", p.Name)
+		fmt.Println("Height: ", p.Height)
+		fmt.Println("Weight: ", p.Weight)
+	} else {
+		fmt.Println("You have not caught that pokemon yet...")
+	}
+
+	return nil
 }
